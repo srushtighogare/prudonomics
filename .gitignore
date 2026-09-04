@@ -1,0 +1,15 @@
+# Environment
+.env
+.conda/
+__pycache__/
+*.pyc
+
+# Database
+*.db
+*.sqlite3
+
+# OS
+.DS_Store
+
+# IDE
+.vscode/
