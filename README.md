@@ -82,9 +82,8 @@ Requires a `.env` file with `GOOGLE_API_KEY` and `GROQ_API_KEY` (see `.env` stru
 
 ## Project Structure
 
-prudonomics/
-├── backend/ # FastAPI app, routing, execution, providers
-├── dashboard/ # Streamlit employee + admin apps
-├── db/ # SQLite schema, seed scripts
-├── data/ # Benchmark prompts and results
-└── README.md
+- **`backend/`** — FastAPI app, routing, execution, providers
+- **`dashboard/`** — Streamlit employee + admin apps
+- **`db/`** — SQLite schema, seed scripts
+- **`data/`** — Benchmark prompts and results
+- **`README.md`**
