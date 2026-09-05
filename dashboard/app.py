@@ -3,12 +3,11 @@ import sys
 import os
 
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
-sys.path.append(os.path.join(os.path.dirname(__file__), "..", "backend"))
 from dashboard.style import apply_style
 from dashboard.db_utils import get_teams
 from backend.pipeline import process_request
 
-st.set_page_config(page_title="Prudonomics", page_icon="💬", layout="centered")
+st.set_page_config(page_title="Prudonomics", page_icon="", layout="centered")
 apply_style()
 
 st.title("Prudonomics Assistant")
@@ -26,16 +25,16 @@ with st.sidebar:
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 
-# --- Render chat history ---
 for msg in st.session_state.chat_history:
     if msg["role"] == "user":
         st.markdown(f'<div class="chat-bubble-user">{msg["content"]}</div>', unsafe_allow_html=True)
     else:
-        st.markdown(f'<div class="chat-bubble-assistant">{msg["content"]}</div>', unsafe_allow_html=True)
+        st.markdown('<div class="chat-bubble-assistant">', unsafe_allow_html=True)
+        st.markdown(msg["content"])
+        st.markdown('</div>', unsafe_allow_html=True)
         if msg.get("meta"):
             st.caption(msg["meta"])
 
-# --- Chat input ---
 prompt = st.chat_input("Type your message...")
 
 if prompt:
@@ -55,5 +54,7 @@ if prompt:
         meta = f"{result['tier']} tier · {result['provider']}/{result['model']} · {badge} · ${result['cost']:.6f}"
 
     st.session_state.chat_history.append({"role": "assistant", "content": response_text, "meta": meta})
-    st.markdown(f'<div class="chat-bubble-assistant">{response_text}</div>', unsafe_allow_html=True)
+    st.markdown('<div class="chat-bubble-assistant">', unsafe_allow_html=True)
+    st.markdown(response_text)
+    st.markdown('</div>', unsafe_allow_html=True)
     st.caption(meta)

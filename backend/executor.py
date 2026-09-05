@@ -2,10 +2,7 @@ from router import route_request, PROVIDER_FUNCTIONS
 from cost_calculator import calculate_cost
 
 def execute_request(prompt: str) -> dict:
-    """
-    Full request lifecycle: route -> call LLM (with fallback on failure) ->
-    calculate cost -> return everything needed for logging.
-    """
+
     routing = route_request(prompt)
     tier = routing["tier"]
 
@@ -43,9 +40,9 @@ def execute_request(prompt: str) -> dict:
         except Exception as e:
             last_error = e
             fallback_triggered = True
-            continue  # try next in attempts list
+            continue 
 
-    # If we get here, every attempt failed
+   
     return {
         "status": "blocked",
         "tier": tier,

@@ -1,12 +1,12 @@
 BENCHMARK_PROMPTS = [
-    # Simple / factual (should route cheap)
+    # Simple 
     "What is the capital of Japan?",
     "What year did World War 2 end?",
     "How many continents are there?",
     "What is the boiling point of water in Celsius?",
     "Who wrote Romeo and Juliet?",
 
-    # Complex / reasoning (should route premium)
+    # Complex
    "Analyze the trade-offs between microservices and monolithic architecture, and justify a recommendation for a mid-size startup.",
     "Explain step by step why the time complexity of binary search is O(log n), and compare it to linear search's trade-offs.",
     "Evaluate the pros and cons of remote work versus in-office work for a software engineering team, and justify a hybrid policy.",

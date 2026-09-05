@@ -1,13 +1,3 @@
-"""
-Deliberately demonstrates Prudonomics' failure handling.
-
-We temporarily point the 'cheap' tier's PRIMARY model at an
-intentionally invalid model name, forcing a real API failure.
-This proves the fallback logic works on command, using the
-exact same code path (executor.py) as production -- nothing
-about the failure-handling logic itself is faked.
-"""
-
 import router
 from executor import execute_request
 

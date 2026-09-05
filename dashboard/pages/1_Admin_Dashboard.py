@@ -8,7 +8,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "..", "backend"))
 from dashboard.style import apply_style
 from dashboard.db_utils import get_teams, get_requests
 
-st.set_page_config(page_title="Prudonomics — Admin", page_icon="📊", layout="wide")
+st.set_page_config(page_title="Prudonomics — Admin", page_icon="", layout="wide")
 apply_style()
 
 st.title("Prudonomics Admin Dashboard")
