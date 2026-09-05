@@ -3,6 +3,7 @@ import sys
 import os
 
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+sys.path.append(os.path.join(os.path.dirname(__file__), "..", "backend"))
 from dashboard.style import apply_style
 from dashboard.db_utils import get_teams
 from backend.pipeline import process_request
@@ -46,11 +47,11 @@ if prompt:
         result = process_request(team_id, prompt)
 
     if result["status"] == "blocked_budget":
-        response_text = "⚠️ Sorry, your team's AI budget has been exceeded. Please contact your admin."
+        response_text = "Sorry, your team's AI budget has been exceeded. Please contact your admin."
         meta = "Blocked by budget policy"
     else:
         response_text = result["response_text"]
-        badge = "🔄 fallback used" if result.get("fallback_triggered") else "✅ primary model"
+        badge = "🔄 fallback used" if result.get("fallback_triggered") else "primary model"
         meta = f"{result['tier']} tier · {result['provider']}/{result['model']} · {badge} · ${result['cost']:.6f}"
 
     st.session_state.chat_history.append({"role": "assistant", "content": response_text, "meta": meta})

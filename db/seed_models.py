@@ -13,7 +13,7 @@ MODELS = [
 def seed_models():
     conn = sqlite3.connect(DB_PATH)
     cur = conn.cursor()
-    cur.execute("DELETE FROM models")  # clear existing rows if re-run
+    cur.execute("DELETE FROM models")  
     cur.executemany(
         "INSERT INTO models (provider, model_name, tier, input_price_per_1k, output_price_per_1k) VALUES (?, ?, ?, ?, ?)",
         MODELS

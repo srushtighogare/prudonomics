@@ -4,9 +4,7 @@ import os
 DB_PATH = os.path.join(os.path.dirname(__file__), "..", "db", "prudonomics.db")
 
 def get_model_pricing(provider: str, model_name: str) -> dict:
-    """
-    Fetches pricing for a specific model from the models table.
-    """
+    
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     cur = conn.cursor()
@@ -23,9 +21,7 @@ def get_model_pricing(provider: str, model_name: str) -> dict:
     return dict(row)
 
 def calculate_cost(provider: str, model_name: str, input_tokens: int, output_tokens: int) -> float:
-    """
-    Calculates the cost of a request based on real per-1k-token pricing.
-    """
+    
     pricing = get_model_pricing(provider, model_name)
     input_cost = (input_tokens / 1000) * pricing["input_price_per_1k"]
     output_cost = (output_tokens / 1000) * pricing["output_price_per_1k"]

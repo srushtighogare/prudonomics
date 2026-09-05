@@ -17,7 +17,7 @@ st.caption("Cost governance, routing explainability, and budget oversight")
 teams_df = get_teams()
 requests_df = get_requests()
 
-# --- KPI Cards ---
+
 total_spend = teams_df["current_spend"].sum()
 total_requests = len(requests_df)
 fallback_count = len(requests_df[requests_df["fallback_triggered"] == 1]) if not requests_df.empty else 0
@@ -86,7 +86,7 @@ with col_b:
 
 st.write("---")
 
-# --- Audit Trail ---
+
 st.subheader("Audit Trail — Every Routing Decision, Explained")
 
 team_options = ["All Teams"] + teams_df["name"].tolist()

@@ -4,11 +4,11 @@ from executor import execute_request
 print("=== BEFORE: normal cheap tier routing ===")
 print(router.TIER_MODELS["cheap"])
 
-# Deliberately break the primary model for the cheap tier
+
 original_cheap_tier = router.TIER_MODELS["cheap"]
 router.TIER_MODELS["cheap"] = [
-    ("groq", "this-model-does-not-exist"),  # will genuinely fail
-    original_cheap_tier[1],  # keep the real fallback (Gemini flash-lite)
+    ("groq", "this-model-does-not-exist"),  
+    original_cheap_tier[1],  
 ]
 
 print("\n=== Forcing a failure on the primary model ===")

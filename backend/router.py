@@ -2,8 +2,7 @@ from complexity_scorer import score_complexity
 from providers.groq_provider import call_groq
 from providers.gemini_provider import call_gemini
 
-# Each tier lists (provider, model_name) in priority order.
-# First entry = primary choice. Second entry = fallback if primary fails.
+
 TIER_MODELS = {
     "cheap": [
         ("groq", "openai/gpt-oss-20b"),

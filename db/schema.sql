@@ -1,4 +1,4 @@
--- Teams table: tracks each team's budget
+
 CREATE TABLE IF NOT EXISTS teams (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL UNIQUE,
@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS teams (
     created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
--- Models table: pricing per model we route to
+
 CREATE TABLE IF NOT EXISTS models (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     provider TEXT NOT NULL,
@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS models (
     output_price_per_1k REAL NOT NULL
 );
 
--- Requests table: every request that comes through the system
+
 CREATE TABLE IF NOT EXISTS requests (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     team_id INTEGER NOT NULL,
@@ -34,7 +34,6 @@ CREATE TABLE IF NOT EXISTS requests (
     FOREIGN KEY (model_id) REFERENCES models(id)
 );
 
--- Audit log table: explains why each request was routed the way it was
 CREATE TABLE IF NOT EXISTS audit_log (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     request_id INTEGER NOT NULL,

@@ -15,7 +15,7 @@ BASELINE_PROVIDER = "groq"
 BASELINE_MODEL = "openai/gpt-oss-120b"
 
 def call_with_retry(prompt, max_retries=3, base_wait=20):
-    """Retries on rate-limit errors with increasing backoff."""
+    
     for attempt in range(max_retries):
         try:
             return call_groq(BASELINE_MODEL, prompt), None

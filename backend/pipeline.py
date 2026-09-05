@@ -6,7 +6,7 @@ from budget_manager import check_budget, add_spend
 DB_PATH = os.path.join(os.path.dirname(__file__), "..", "db", "prudonomics.db")
 
 def log_request(team_id, prompt, exec_result) -> int:
-    """Logs a request to the requests table. Returns the new request's id."""
+    
     conn = sqlite3.connect(DB_PATH)
     cur = conn.cursor()
 
@@ -20,10 +20,7 @@ def log_request(team_id, prompt, exec_result) -> int:
         model_id = row[0] if row else None
 
     cur.execute(
-        """INSERT INTO requests
-           (team_id, prompt, complexity_score, complexity_tier, model_id,
-            input_tokens, output_tokens, cost, status)
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+        
         (team_id, prompt, exec_result["complexity_score"], exec_result["tier"],
          model_id, exec_result["input_tokens"], exec_result["output_tokens"],
          exec_result["cost"], exec_result["status"])
@@ -34,26 +31,18 @@ def log_request(team_id, prompt, exec_result) -> int:
     return request_id
 
 def log_audit(request_id, reasoning, budget_status, fallback_triggered):
-    """Logs the audit trail entry explaining the routing decision."""
+    
     conn = sqlite3.connect(DB_PATH)
     cur = conn.cursor()
     cur.execute(
-        """INSERT INTO audit_log
-           (request_id, reasoning, budget_status_at_time, fallback_triggered)
-           VALUES (?, ?, ?, ?)""",
+      
         (request_id, reasoning, budget_status, int(fallback_triggered))
     )
     conn.commit()
     conn.close()
 
 def process_request(team_id: int, prompt: str) -> dict:
-    """
-    The full request lifecycle:
-    1. Check budget -> block if hard_block
-    2. Execute the request (route, call LLM, fallback if needed)
-    3. Log the request + audit trail
-    4. Update team spend if successful
-    """
+    
     budget_status = check_budget(team_id)
 
     if budget_status["status"] == "hard_block":

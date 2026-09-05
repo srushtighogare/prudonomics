@@ -17,10 +17,7 @@ def get_team(team_id: int) -> dict:
     return dict(row)
 
 def check_budget(team_id: int) -> dict:
-    """
-    Checks a team's current spend against their budget.
-    Returns a status: 'ok', 'soft_alert', or 'hard_block'.
-    """
+    
     team = get_team(team_id)
     budget = team["monthly_budget"]
     spend = team["current_spend"]
@@ -41,9 +38,7 @@ def check_budget(team_id: int) -> dict:
     }
 
 def add_spend(team_id: int, cost: float):
-    """
-    Adds a cost to a team's current_spend after a successful request.
-    """
+    
     conn = sqlite3.connect(DB_PATH)
     cur = conn.cursor()
     cur.execute(
