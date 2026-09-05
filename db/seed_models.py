@@ -5,7 +5,7 @@ DB_PATH = os.path.join(os.path.dirname(__file__), "prudonomics.db")
 
 MODELS = [
     ("google", "gemini-3.1-flash-lite", "cheap", 0.00025, 0.0015),
-    ("google", "gemini-3.1-pro", "premium", 0.002, 0.012),
+    ("google", "gemini-3.5-flash", "premium", 0.0015, 0.009),
     ("groq", "openai/gpt-oss-20b", "cheap", 0.000075, 0.0003),
     ("groq", "openai/gpt-oss-120b", "premium", 0.00015, 0.0006),
 ]

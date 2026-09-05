@@ -10,8 +10,8 @@ TIER_MODELS = {
         ("google", "gemini-3.1-flash-lite"),
     ],
     "premium": [
-        ("google", "gemini-3.1-pro"),
-        ("groq", "openai/gpt-oss-120b"),
+    ("google", "gemini-3.5-flash"),
+    ("groq", "openai/gpt-oss-120b"),
     ],
 }
 
