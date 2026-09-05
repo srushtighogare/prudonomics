@@ -1,0 +1,135 @@
+{
+  "summary": {
+    "total_prompts_attempted": 10,
+    "prompts_used_in_paired_comparison": 10,
+    "baseline_paired_total_cost": 0.00190485,
+    "routed_paired_total_cost": 0.00180127,
+    "cost_reduction_pct": 5.44,
+    "baseline_failures_excluded": 0,
+    "routed_failures": 0
+  },
+  "baseline_results": [
+    {
+      "prompt": "What is the capital of Japan?",
+      "cost": 3.57e-05,
+      "status": "success"
+    },
+    {
+      "prompt": "What year did World War 2 end?",
+      "cost": 6.3e-05,
+      "status": "success"
+    },
+    {
+      "prompt": "How many continents are there?",
+      "cost": 0.00012495,
+      "status": "success"
+    },
+    {
+      "prompt": "What is the boiling point of water in Celsius?",
+      "cost": 5.235e-05,
+      "status": "success"
+    },
+    {
+      "prompt": "Who wrote Romeo and Juliet?",
+      "cost": 5.775e-05,
+      "status": "success"
+    },
+    {
+      "prompt": "Analyze the trade-offs between microservices and monolithic architecture, and justify a recommendation for a mid-size startup.",
+      "cost": 0.00031395,
+      "status": "success"
+    },
+    {
+      "prompt": "Explain step by step why the time complexity of binary search is O(log n), and compare it to linear search's trade-offs.",
+      "cost": 0.00031455,
+      "status": "success"
+    },
+    {
+      "prompt": "Evaluate the pros and cons of remote work versus in-office work for a software engineering team, and justify a hybrid policy.",
+      "cost": 0.00031425,
+      "status": "success"
+    },
+    {
+      "prompt": "Analyze the architecture trade-offs between SQL and NoSQL databases for a high-write social media application, and justify a recommendation.",
+      "cost": 0.00031425,
+      "status": "success"
+    },
+    {
+      "prompt": "Justify whether a startup should build its own authentication system or use a third-party provider, analyzing the trade-offs.",
+      "cost": 0.0003141,
+      "status": "success"
+    }
+  ],
+  "routed_results": [
+    {
+      "prompt": "What is the capital of Japan?",
+      "cost": 1.695e-05,
+      "status": "success",
+      "tier": "cheap",
+      "provider": "groq"
+    },
+    {
+      "prompt": "What year did World War 2 end?",
+      "cost": 4.08e-05,
+      "status": "success",
+      "tier": "cheap",
+      "provider": "groq"
+    },
+    {
+      "prompt": "How many continents are there?",
+      "cost": 9.878e-05,
+      "status": "success",
+      "tier": "cheap",
+      "provider": "groq"
+    },
+    {
+      "prompt": "What is the boiling point of water in Celsius?",
+      "cost": 4.597e-05,
+      "status": "success",
+      "tier": "cheap",
+      "provider": "groq"
+    },
+    {
+      "prompt": "Who wrote Romeo and Juliet?",
+      "cost": 2.767e-05,
+      "status": "success",
+      "tier": "cheap",
+      "provider": "groq"
+    },
+    {
+      "prompt": "Analyze the trade-offs between microservices and monolithic architecture, and justify a recommendation for a mid-size startup.",
+      "cost": 0.00031395,
+      "status": "fallback_success",
+      "tier": "premium",
+      "provider": "groq"
+    },
+    {
+      "prompt": "Explain step by step why the time complexity of binary search is O(log n), and compare it to linear search's trade-offs.",
+      "cost": 0.00031455,
+      "status": "fallback_success",
+      "tier": "premium",
+      "provider": "groq"
+    },
+    {
+      "prompt": "Evaluate the pros and cons of remote work versus in-office work for a software engineering team, and justify a hybrid policy.",
+      "cost": 0.00031425,
+      "status": "fallback_success",
+      "tier": "premium",
+      "provider": "groq"
+    },
+    {
+      "prompt": "Analyze the architecture trade-offs between SQL and NoSQL databases for a high-write social media application, and justify a recommendation.",
+      "cost": 0.00031425,
+      "status": "fallback_success",
+      "tier": "premium",
+      "provider": "groq"
+    },
+    {
+      "prompt": "Justify whether a startup should build its own authentication system or use a third-party provider, analyzing the trade-offs.",
+      "cost": 0.0003141,
+      "status": "fallback_success",
+      "tier": "premium",
+      "provider": "groq"
+    }
+  ]
+}
