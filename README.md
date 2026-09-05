@@ -19,35 +19,20 @@ Prudonomics solves this by automatically routing each request to the most cost-a
 
 ## Architecture
 
-┌─────────────────┐ ┌──────────────────┐
-│ Employee Chat │ │ Admin Dashboard │
-│ (Streamlit) │ │ (Streamlit) │
-└────────┬─────────┘ └─────────┬─────────┘
-│ │
-└──────────┬──────────────────┘
-│
-┌──────▼───────┐
-│ Pipeline │ <- budget check → route → execute → log
-└──────┬───────┘
-┌───────────┼────────────┐
-▼ ▼ ▼
-┌─────────┐ ┌───────────┐ ┌──────────┐
-│ Router │ │ Budget │ │ Cost │
-│(scorer) │ │ Manager │ │Calculator│
-└────┬────┘ └───────────┘ └──────────┘
-▼
-┌────────────┐
-│ Executor │ <- calls LLM, retries fallback on failure
-└─────┬──────┘
-▼
-┌─────────────┬─────────────┐
-│ Gemini API │ Groq API │
-└─────────────┴─────────────┘
-│
-▼
-┌──────────────┐
-│ SQLite DB │ (teams, models, requests, audit_log)
-└──────────────┘
+```mermaid
+graph TD
+    A[Employee Chat - Streamlit] --> C[Pipeline]
+    B[Admin Dashboard - Streamlit] --> C
+    C --> D[Budget Manager]
+    C --> E[Router / Complexity Scorer]
+    E --> F[Executor]
+    F -->|calls LLM, retries fallback on failure| G[Gemini API]
+    F -->|calls LLM, retries fallback on failure| H[Groq API]
+    F --> I[Cost Calculator]
+    C --> J[(SQLite DB: teams, models, requests, audit_log)]
+    D --> J
+    F --> J
+```
 
 
 ## Tech Stack
