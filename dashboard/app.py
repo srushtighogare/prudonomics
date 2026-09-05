@@ -1,48 +1,59 @@
 import streamlit as st
-import sqlite3
+import sys
 import os
-import pandas as pd
 
-DB_PATH = os.path.join(os.path.dirname(__file__), "..", "db", "prudonomics.db")
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+sys.path.append(os.path.join(os.path.dirname(__file__), "..", "backend"))
+from dashboard.style import apply_style
+from dashboard.db_utils import get_teams
+from backend.pipeline import process_request
 
-st.set_page_config(page_title="Prudonomics", layout="wide")
+st.set_page_config(page_title="Prudonomics", page_icon="💬", layout="centered")
+apply_style()
 
-def get_connection():
-    conn = sqlite3.connect(DB_PATH)
-    conn.row_factory = sqlite3.Row
-    return conn
+st.title("Prudonomics Assistant")
+st.caption("Ask anything — Prudonomics automatically routes your request to the most cost-appropriate AI model.")
 
-def get_teams():
-    conn = get_connection()
-    df = pd.read_sql_query("SELECT * FROM teams", conn)
-    conn.close()
-    return df
+teams_df = get_teams()
+team_name_to_id = dict(zip(teams_df["name"], teams_df["id"]))
 
-def get_requests(team_id=None):
-    conn = get_connection()
-    query = """
-        SELECT
-            r.id, r.prompt, r.complexity_score, r.complexity_tier,
-            r.status, r.input_tokens, r.output_tokens, r.cost, r.created_at,
-            m.provider, m.model_name,
-            a.reasoning, a.budget_status_at_time, a.fallback_triggered,
-            t.name AS team_name
-        FROM requests r
-        LEFT JOIN models m ON r.model_id = m.id
-        LEFT JOIN audit_log a ON a.request_id = r.id
-        LEFT JOIN teams t ON r.team_id = t.id
-    """
-    if team_id:
-        query += " WHERE r.team_id = ?"
-        df = pd.read_sql_query(query + " ORDER BY r.created_at DESC", conn, params=(team_id,))
+with st.sidebar:
+    st.markdown("### Your Team")
+    selected_team_name = st.selectbox("Select your team", list(team_name_to_id.keys()))
+    st.write("---")
+    st.caption("Prudonomics automatically picks the cheapest model that can handle your request, and blocks usage if your team's budget is exceeded.")
+
+if "chat_history" not in st.session_state:
+    st.session_state.chat_history = []
+
+# --- Render chat history ---
+for msg in st.session_state.chat_history:
+    if msg["role"] == "user":
+        st.markdown(f'<div class="chat-bubble-user">{msg["content"]}</div>', unsafe_allow_html=True)
     else:
-        df = pd.read_sql_query(query + " ORDER BY r.created_at DESC", conn)
-    conn.close()
-    return df
+        st.markdown(f'<div class="chat-bubble-assistant">{msg["content"]}</div>', unsafe_allow_html=True)
+        if msg.get("meta"):
+            st.caption(msg["meta"])
 
-st.title("💰 Prudonomics")
-st.caption("Cost-optimal LLM routing and budget governance")
+# --- Chat input ---
+prompt = st.chat_input("Type your message...")
 
-st.write("Dashboard scaffold loaded successfully.")
-st.write("Teams in database:")
-st.dataframe(get_teams())
+if prompt:
+    st.session_state.chat_history.append({"role": "user", "content": prompt})
+    st.markdown(f'<div class="chat-bubble-user">{prompt}</div>', unsafe_allow_html=True)
+
+    team_id = team_name_to_id[selected_team_name]
+    with st.spinner("Thinking..."):
+        result = process_request(team_id, prompt)
+
+    if result["status"] == "blocked_budget":
+        response_text = "⚠️ Sorry, your team's AI budget has been exceeded. Please contact your admin."
+        meta = "Blocked by budget policy"
+    else:
+        response_text = result["response_text"]
+        badge = "🔄 fallback used" if result.get("fallback_triggered") else "✅ primary model"
+        meta = f"{result['tier']} tier · {result['provider']}/{result['model']} · {badge} · ${result['cost']:.6f}"
+
+    st.session_state.chat_history.append({"role": "assistant", "content": response_text, "meta": meta})
+    st.markdown(f'<div class="chat-bubble-assistant">{response_text}</div>', unsafe_allow_html=True)
+    st.caption(meta)
