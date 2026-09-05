@@ -4,11 +4,10 @@ import os
 DB_PATH = os.path.join(os.path.dirname(__file__), "prudonomics.db")
 
 MODELS = [
-    # provider, model_name, tier, input_price_per_1k, output_price_per_1k
     ("google", "gemini-3.1-flash-lite", "cheap", 0.00025, 0.0015),
     ("google", "gemini-3.1-pro", "premium", 0.002, 0.012),
-    ("groq", "llama-3.1-8b-instant", "cheap", 0.00005, 0.00008),
-    ("groq", "llama-3.3-70b-versatile", "premium", 0.00059, 0.00079),
+    ("groq", "openai/gpt-oss-20b", "cheap", 0.000075, 0.0003),
+    ("groq", "openai/gpt-oss-120b", "premium", 0.00015, 0.0006),
 ]
 
 def seed_models():
