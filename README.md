@@ -59,7 +59,7 @@ Measured on a fixed set of 10 prompts (5 simple/factual, 5 complex/reasoning), c
 
 **Note on this result:** The baseline used Groq's premium model, since Gemini's free-tier premium model hit a daily quota limit during testing. Groq's premium-vs-cheap pricing gap is relatively small (~2x), which makes this a conservative estimate — the gap between commercial provider tiers (e.g., GPT-5 vs. a lightweight model) is typically much larger, so a production deployment routing across paid, higher-tier commercial models would likely show a substantially larger cost reduction. Full raw results are in `data/benchmark_results.json`.
 
-## Real Failures Handled (Not Staged)
+## Real Failures Handled
 
 During development, the fallback mechanism caught two genuine, unplanned failures:
 1. A Gemini model returning a 404 (incorrect/deprecated model access)
@@ -78,7 +78,7 @@ uvicorn main:app --reload
 streamlit run dashboard/app.py
 ```
 
-Requires a `.env` file with `GOOGLE_API_KEY` and `GROQ_API_KEY` (see `.env` structure in repo — keys are never committed).
+Requires a `.env` file with `GOOGLE_API_KEY` and `GROQ_API_KEY` 
 
 ## Project Structure
 
